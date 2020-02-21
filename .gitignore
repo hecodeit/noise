@@ -1,5 +1,7 @@
 gittool.md
 */DerivedData/
+*.app
+
 # Compiled source #
 ###################
 *.com
