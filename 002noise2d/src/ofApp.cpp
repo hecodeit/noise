@@ -1,6 +1,18 @@
 #include "ofApp.h"
 #define NUM_NOISE_OCTAVES 5
 
+float fbm(float x) {
+    float v = 0.0;
+    float a = 0.5;
+    float shift = float(100);
+    for (int i = 0; i < NUM_NOISE_OCTAVES; ++i) {
+        v += a * ofSignedNoise(x);
+        x = x * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+}
+
 float fbm(glm::vec2 x) {
     float v = 0.0;
     float a = 0.5;
@@ -22,27 +34,53 @@ void ofApp::setup(){
     ofEnableAlphaBlending();
     
     img.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR);
+    
+    ofPixels pixels = img.getPixels();
+        
+        for(int x = 0; x < ofGetWidth(); x++) {
+            for(int y = 0; y < ofGetHeight(); y++) {
+                
+    //            float bright = ofMap(ofRandomf(),0,1,0,255);
+                float bright = ofMap(fbm(glm::vec2(x/160.f,y/160.f)),0,1,0,255);
+                pixels.setColor(x, y, ofColor(bright));
+            }
+        }
+        
+        img.setFromPixels(pixels);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    ofPixels pixels = img.getPixels();
+
+    t = ofGetElapsedTimef();
+
+    trailx = int(t*200.f)%(ofGetWidth());
+    traily = ofGetHeight()/2;
+    traily += fbm(t*1)*400;
     
-    for(int x = 0; x < ofGetWidth(); x++) {
-        for(int y = 0; y < ofGetHeight(); y++) {
-            
-//            float bright = ofMap(ofRandomf(),0,1,0,255);
-            float bright = ofMap(fbm(glm::vec2(x/160.f,y/160.f)),0,1,0,255);
-            pixels.setColor(x, y, ofColor(bright));
-        }
+    if(trailx<prevX){
+        trail.clear();
+    }else{
+        trail.addVertex(trailx,traily);
     }
     
-    img.setFromPixels(pixels);
+
+    prevX = trailx;
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     img.draw(0,0);
+    
+    ofSetLineWidth(2);
+    ofSetColor(255, 177);
+//    ofClear(71, 255);
+    trail.draw();
+    
+    ofSetLineWidth(1);
+    ofDrawLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
+    
 
 }
 

@@ -22,4 +22,6 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
         ofImage img;
+        ofPolyline trail;
+        float trailx, prevX, traily, t;
 };
