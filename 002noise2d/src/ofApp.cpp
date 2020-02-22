@@ -1,5 +1,5 @@
 #include "ofApp.h"
-#define NUM_NOISE_OCTAVES 5
+#define NUM_NOISE_OCTAVES 8
 
 float fbm(float x) {
     float v = 0.0;
@@ -54,7 +54,7 @@ void ofApp::update(){
 
     t = ofGetElapsedTimef();
 
-    trailx = int(t*200.f)%(ofGetWidth());
+    trailx = int(t*400.f)%(ofGetWidth());
     traily = ofGetHeight()/2;
     traily += fbm(t*1)*400;
     
@@ -81,7 +81,7 @@ void ofApp::draw(){
     ofSetLineWidth(1);
     ofDrawLine(0,ofGetHeight()/2,ofGetWidth(),ofGetHeight()/2);
     
-
+    ofDrawBitmapString("fps:" + ofToString(ofGetFrameRate(),0),ofGetWidth()-80,20);
 }
 
 //--------------------------------------------------------------
