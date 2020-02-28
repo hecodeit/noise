@@ -47,8 +47,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
-
 }
 
 //--------------------------------------------------------------
@@ -58,6 +56,7 @@ void ofApp::draw(){
     
     cam.begin();
         shader.begin();
+        
         shader.setUniform1f("time", ofGetElapsedTimef());
         shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
             mesh.draw();

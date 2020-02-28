@@ -6,9 +6,7 @@ uniform vec2 resolution;
 uniform mat4 modelViewMatrix;
 uniform mat4 projectionMatrix;
 
-in vec3 position;
-out vec3 vPosition;
-
+in vec4 position;
 
 vec3 mod289(vec3 x) {
   return x - floor(x * (1.0 / 289.0)) * 289.0;
@@ -108,7 +106,9 @@ vec3 snoiseVec3( vec3 x ){
   return c;
 }
 
-
+vec3 myNoise( vec3 p ){
+    
+}
 vec3 curlNoise( vec3 p ){
 
   const float e = .1;
@@ -133,7 +133,6 @@ vec3 curlNoise( vec3 p ){
 }
 
 void main(){
-  vPosition = position;
 
 //  float px = position.x;
 //  float py = position.y;
@@ -144,25 +143,25 @@ void main(){
 //  float sz = sin(float(position.xy) * time * 20.0) * 0.005;
 //
 //  vec3 p = vec3(px + sx, py + sy, pz + sz);
-
-  // gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+//
+//   gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
 
   // curl
   // https://github.com/cabbibo/glsl-curl-noise
 
   // floorかけたらlineだけになった
-  // vec3 curl = curlNoise(floor(position) + reflect(float(position), 1.0) + (time * 0.2));
+//   vec3 curl = curlNoise(floor(position) + reflect(float(position), 1.0) + (time * 0.2));
 
-  vec3 curl = curlNoise(fract(position) + reflect(float(position), 1.0) + (time * .02));
+    
+  vec3 curl = curlNoise(fract(position.xyz) + reflect(float(position.xyz), 1.0) + (time * .01));
 
   gl_Position = projectionMatrix * modelViewMatrix * vec4(curl, 1.0);
 
   // z.position
-//   float point = sin(curl.y + 1.0) * 2.0;
-//   gl_PointSize = point;
+    gl_PointSize = 3.0-gl_Position.z*2.0;
 
   // default
-  // gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  gl_PointSize = 1.0;
+//  gl_PointSize = 1.0;
+    
 }
 

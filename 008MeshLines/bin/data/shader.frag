@@ -2,9 +2,6 @@
 
 out vec4 outputColor;
 
-//uniform float time;
-in vec3 vPosition;
-
 void main() {
 
 //    float f = length(gl_PointCoord - vec2(0.5, 0.5));
