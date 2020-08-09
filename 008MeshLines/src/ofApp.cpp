@@ -26,10 +26,10 @@ void ofApp::setup(){
     glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
     mesh.setMode(OF_PRIMITIVE_POINTS);
     mesh.enableColors();
-//    mesh.setUsage(GL_STREAM_DRAW);
+//    mesh.setUsage(GL_DYNAMIC_DRAW);
     
-    unsigned w = 1024;
-    unsigned h = 1024;
+    unsigned w = 2048;
+    unsigned h = 2048;
     
 //    for (int i = 0; i < 500000; i++) {
 //        mesh.addVertex(sphericalCoordinates()*300);
@@ -69,7 +69,7 @@ void ofApp::draw(){
             shader.setUniform2f("resolution", ofGetWidth(), ofGetHeight());
             ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
             mesh.draw();
-//            mesh.getVbo().draw(GL_POINTS, 0, mesh.getVertices().size());
+            mesh.getVbo().draw(GL_POINTS, 0, mesh.getVertices().size());
             ofDisableBlendMode();
         shader.end();
     cam.end();

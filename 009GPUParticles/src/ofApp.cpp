@@ -82,8 +82,8 @@ void ofApp::update(){
 // set any update uniforms in this function
 void ofApp::onParticlesUpdate(ofShader& shader)
 {
-    timer += 0.01;
-    shader.setUniform1f("timer", timer);
+//    timer += 0.01;
+    shader.setUniform1f("timer", ofGetElapsedTimef());
 }
 
 
